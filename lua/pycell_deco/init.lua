@@ -1,21 +1,28 @@
 --  This code is reusing a lot of codes of lukas-reineke/jeadlines.nvim
+local vim = vim
 local M = {}
 
 M.dash_namespace = vim.api.nvim_create_namespace "cell_dash_namespace"
 M.sign_namespace = "cell_sign_namespace"
 
 M.config = {
-    cell_fg = "#1abc9c",
-    cell_bg = nil
+    cell_name_fg = "#1abc9c",
+    cell_line_bg = nil
 }
 
 M.setup = function(config)
     M.config = vim.tbl_deep_extend("force", M.config, config or {})
-    local hl_cmd = "highlight PyCell guifg=" .. M.config.cell_fg
 
-    if type(M.config.cell_bg) == "string" then
-        hl_cmd = hl_cmd .. " guibg=" .. M.config.cell_bg
+    local guifg = M.config.cell_name_fg
+    local guibg = M.config.cell_line_bg
+    if guifg == nil then
+        guifg = "NONE"
     end
+    if guibg == nil then
+        guibg = "NONE"
+    end
+
+    local hl_cmd = string.format("highlight PyCell guifg=%s guibg=%s", guifg, guibg)
 
     vim.cmd(hl_cmd)
 
@@ -51,7 +58,7 @@ M.refresh = function()
             )
             local n_dash = width - #lines[i] - 1
             vim.api.nvim_buf_set_extmark(bufnr, M.dash_namespace, i - 1 + offset, 0, {
-                virt_text = { { ("—"):rep(n_dash)} },
+                virt_text = { { ("—"):rep(n_dash) } },
                 hl_mode = "combine",
             })
         end
