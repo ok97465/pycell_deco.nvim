@@ -51,7 +51,7 @@ M.refresh = function()
         if pos_cell_end then
             vim.fn.sign_place(
                 0,
-                M.name_namespace,
+                M.sign_namespace,
                 sign_name,
                 bufnr,
                 { lnum = i + offset }
