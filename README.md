@@ -22,8 +22,7 @@ Plug 'ok97465/pycell_deco.nvim'
 
 ```lua
 require("pycell_deco").setup{
-  cell_name_fg = "#1abc9c",
-  cell_line_bg = nil,
-  colorize_dash = true,
+  -- Single color used for header, cell name and dash
+  color = "#1abc9c",
 }
 ```
